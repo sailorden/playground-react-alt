@@ -1,7 +1,6 @@
 
-var React = window.React = require('react'),
-    Timer = require("./ui/Timer"),
-    mountNode = document.getElementById("app");
+var React = window.React = require('react')
+var Timer = require("./ui/Timer")
 
 var TodoList = React.createClass({
   render: function() {
@@ -11,18 +10,20 @@ var TodoList = React.createClass({
     return <ul>{this.props.items.map(createItem)}</ul>;
   }
 });
-var TodoApp = React.createClass({
+
+var App = React.createClass({
   getInitialState: function() {
-    return {items: [], text: ''};
+    return {items: ['Theo\'s Meatballs', 'Teddy Supreme'], text: ''};
   },
-  onChange: function(e) {
-    this.setState({text: e.target.value});
+  handleChange: function(e) {
+    this.setState({text: e.target.value});// calling this triggers UI update
   },
   handleSubmit: function(e) {
+    console.log(e)
     e.preventDefault();
+
     var nextItems = this.state.items.concat([this.state.text]);
-    var nextText = '';
-    this.setState({items: nextItems, text: nextText});
+    this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
   render: function() {
     return (
@@ -30,7 +31,7 @@ var TodoApp = React.createClass({
         <h3>TODO</h3>
         <TodoList items={this.state.items} />
         <form onSubmit={this.handleSubmit}>
-          <input onChange={this.onChange} value={this.state.text} />
+          <input onChange={this.handleChange} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
         <Timer />
@@ -40,5 +41,4 @@ var TodoApp = React.createClass({
 });
 
 
-React.render(<TodoApp />, mountNode);
-
+React.render(<App />, document.getElementById("app"));
