@@ -1,4 +1,4 @@
-{ resp: {
+module.exports = { resp: [
 [id: "1431935533649956863" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/charliecwaite/128.jpg", firstName: "Bev", lastName: "Griffith", username: "therealmarvin"]],
 [id: "1431935533659994494" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/boxmodel/128.jpg", firstName: "Exie", lastName: "Kelly", username: "timothycd"]],
 [id: "1431935533670713643" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/jamiebrittain/128.jpg", firstName: "Mana", lastName: "Pena", username: "jonathansimmons"]],
@@ -99,4 +99,4 @@
 [id: "1431935534620775576" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/namankreative/128.jpg", firstName: "Lavonna", lastName: "Greene", username: "saschadroste"]],
 [id: "1431935534630844676" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/rude/128.jpg", firstName: "Michale", lastName: "Blake", username: "HenryHoffman"]],
 [id: "1431935534640798281" , data: [avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/gonzalorobaina/128.jpg", firstName: "Bethann", lastName: "Duncan", username: "mikemai2awesome"]]
-}}
+]}

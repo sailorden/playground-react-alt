@@ -1,23 +1,30 @@
-//echo '[id: "{{unixtime}}" , data: [avatar: "{{avatar}}", firstName: "{{name.first}}", lastName: "{{name.last}}", username: "{{username}}"]],' | phony --max 100 > response.json
+//echo '{"id": "{{unixtime}}" , "data": {"avatar": "{{avatar}}", "firstName": "{{name.first}}", "lastName": "{{name.last}}", "username": "{{username}}"}},' | phony --max 100 > response.json
 
 var React = window.React = require('react')
 var Timer = require("./ui/Timer")
 var Ajax = require('react-ajax')
+var resp = require('./response.js').splice(0,5);
+console.log(resp)
 
 var TodoList = React.createClass({
   render: function() {
-    var createItem = function(itemText) {
-      return <li>{itemText}</li>;
+    var createItem = function(user) {
+      return <div>
+          <div>
+            <img src={user.data.avatar} />
+          </div>
+          {user.data.username}
+      </div>;
     };
 
-    return <ul>{this.props.items.map(createItem)}</ul>;
+    return <div>{this.props.items.map(createItem)}</div>;
   }
 });
 
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: ['Theo\'s Meatballs', 'Teddy Supreme'], 
+      initialItems: resp, 
       items: [],
       text: ''
     };
@@ -26,27 +33,28 @@ var App = React.createClass({
     this.setState({text: e.target.value});// calling this triggers UI update
   },
   handleSubmit: function(e) {
-    console.log(e)
     e.preventDefault();
 
     var nextItems = this.state.items.concat([this.state.text]);
     this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
   filterList: function(event){
+                /*
     var updatedList = this.state.initialItems;
     updatedList = updatedList.filter(function(item){
       return item.toLowerCase().search(
         event.target.value.toLowerCase()) !== -1;
     });
     this.setState({items: updatedList});
+    */
   },
   componentWillMount: function() {
     this.setState({items: this.state.initialItems})
   },
-  handleResponse: function(a,b,c) {
-    console.log(a)
-    console.log(b)
-    console.log(c)
+  componentDidMount: function() {
+                       console.log('componentDidMount');
+    this.setState({initialItems: ['hello']});
+    this.setState({items: this.state.initialItems});
   },
   render: function() {
     return (
@@ -64,16 +72,5 @@ var App = React.createClass({
     );
   }
 });
-
-/*
-var fetch = new Promise(function(resolve, reject) {
-  get('response.json', function(err, res) {
-    if (err) reject(err);
-
-    console.log(res);
-    resolve(res);
-  });
-});
-*/
 
 React.render(<App />, document.getElementById("app"));
