@@ -26,7 +26,7 @@ var TodoList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: resp, 
+      initialItems: [], 
       items: [],
       text: ''
     };
@@ -56,12 +56,15 @@ var App = React.createClass({
     this.setState({items: updatedList});
   },
   componentWillMount: function() {
+    console.log('componentWillMount');
     this.setState({items: this.state.initialItems})
   },
   componentDidMount: function() {
-                       console.log('componentDidMount');
-    //this.setState({initialItems: ['hello']});
-    this.setState({items: this.state.initialItems});
+    setTimeout(function() {
+        console.log('componentDidMount');
+        this.setState({initialItems: resp});
+        this.setState({items: this.state.initialItems});
+    }.bind(this), 300); // use this timeout to simulate an AJAX request. otherwise, initItems is not set on first render as desired
   },
   render: function() {
     return (
