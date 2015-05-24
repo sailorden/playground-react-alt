@@ -3,7 +3,7 @@
 var React = window.React = require('react')
 var Timer = require("./ui/Timer")
 var Ajax = require('react-ajax')
-var resp = require('./response.js').splice(0,5);
+var resp = require('./response.js');
 console.log(resp)
 
 var TodoList = React.createClass({
