@@ -31,16 +31,16 @@ var App = React.createClass({
       text: ''
     };
   },
-  handleChange: function(e) {
+  onChangeAddField: function(e) {
     this.setState({text: e.target.value});// calling this triggers UI update
   },
-  handleSubmit: function(e) {
+  onSubmitAddField: function(e) {
     e.preventDefault();
 
     var nextItems = this.state.items.concat([this.state.text]);
     this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
-  filterList: function(event){
+  filterList: function(event) {
     var updatedList = this.state.initialItems;
     var lowerCasedInput = event.target.value.toLowerCase()
 
@@ -48,12 +48,14 @@ var App = React.createClass({
     updatedList = updatedList.filter(function(item) {
         return [item.data.username.toLowerCase(),
                item.data.firstName.toLowerCase(),
-               item.data.lastName.toLowerCase()].
-                   map(function(el) { return el.search(lowerCasedInput)}).
-                   some(function(el) {return el !== -1});
+               item.data.lastName.toLowerCase()]
+                   .map(function(el) { return el.search(lowerCasedInput)})
+                   .some(function(el) {return el !== -1});
     });
 
+    console.log(updatedList)
     this.setState({items: updatedList});
+    updatedList.length === 0 ? console.log('empty list'): !!1;
   },
   componentWillMount: function() {
     console.log('componentWillMount');
@@ -73,8 +75,8 @@ var App = React.createClass({
         <input type="text" placeholder="Search" onChange={this.filterList}/>
 
         <TodoList items={this.state.items} />
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleChange} value={this.state.text} placeholder='Add An Item'/>
+        <form onSubmit={this.onSubmitAddField}>
+          <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
         <Timer />
