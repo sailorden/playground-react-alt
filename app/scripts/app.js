@@ -39,21 +39,21 @@ var App = React.createClass({
     this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
   filterList: function(event){
-                /*
     var updatedList = this.state.initialItems;
-    updatedList = updatedList.filter(function(item){
-      return item.toLowerCase().search(
-        event.target.value.toLowerCase()) !== -1;
+    updatedList = updatedList.filter(function(item) {
+      console.log(item)
+      return item.data.username.toLowerCase().search(
+        //target.value gets the elements user inputted value
+        event.target.value.toLowerCase()) !== -1; 
     });
     this.setState({items: updatedList});
-    */
   },
   componentWillMount: function() {
     this.setState({items: this.state.initialItems})
   },
   componentDidMount: function() {
                        console.log('componentDidMount');
-    this.setState({initialItems: ['hello']});
+    //this.setState({initialItems: ['hello']});
     this.setState({items: this.state.initialItems});
   },
   render: function() {
