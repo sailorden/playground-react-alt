@@ -13,7 +13,9 @@ var TodoList = React.createClass({
           <div>
             <img src={user.data.avatar} />
           </div>
-          {user.data.username}
+          {user.data.username}<br/>
+          {user.data.firstName}<br/>
+          {user.data.lastName}
       </div>;
     };
 
@@ -40,12 +42,17 @@ var App = React.createClass({
   },
   filterList: function(event){
     var updatedList = this.state.initialItems;
+    var lowerCasedInput = event.target.value.toLowerCase()
+
+    
     updatedList = updatedList.filter(function(item) {
-      console.log(item)
-      return item.data.username.toLowerCase().search(
-        //target.value gets the elements user inputted value
-        event.target.value.toLowerCase()) !== -1; 
+        return [item.data.username.toLowerCase(),
+               item.data.firstName.toLowerCase(),
+               item.data.lastName.toLowerCase()].
+                   map(function(el) { return el.search(lowerCasedInput)}).
+                   some(function(el) {return el !== -1});
     });
+
     this.setState({items: updatedList});
   },
   componentWillMount: function() {
