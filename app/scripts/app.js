@@ -1,9 +1,14 @@
 //echo '{"id": "{{unixtime}}" , "data": {"avatar": "{{avatar}}", "firstName": "{{name.first}}", "lastName": "{{name.last}}", "username": "{{username}}"}},' | phony --max 100 > response.json
 
+'use strict'
+
 var React = window.React = require('react')
 var Timer = require("./ui/Timer")
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
+var AltContainer = require('alt/AltContainer');
+var LocationStore = require('./stores/LocationStore');
+
 console.log(resp)
 
 var TodoList = React.createClass({
