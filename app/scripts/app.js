@@ -9,8 +9,6 @@ var resp = require('./response.js');
 var AltContainer = require('alt/AltContainer');
 var LocationStore = require('./stores/LocationStore');
 
-console.log(resp)
-
 var TodoList = React.createClass({
   render: function() {
     var createItem = function(user) {
@@ -31,7 +29,7 @@ var TodoList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: [], 
+      initialItems: LocationStore.getState().locations,  // we are returned {locatins: [..]}
       items: [],
       text: ''
     };
@@ -67,13 +65,21 @@ var App = React.createClass({
     this.setState({items: this.state.initialItems})
   },
   componentDidMount: function() {
-    setTimeout(function() {
-        console.log('componentDidMount');
-        this.setState({initialItems: resp});
-        this.setState({items: this.state.initialItems});
-    }.bind(this), 300); // use this timeout to simulate an AJAX request. otherwise, initItems is not set on first render as desired
+    LocationStore.listen(this.onChange);
+  },
+  componentWillUnmount() {
+    LocationStore.unlisten(this.onChange);
   },
   render: function() {
+/*
+    if (!this.state.items.length) {
+      return (
+        <div>Nothing here</div>
+      );
+    }
+*/
+    var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
+
     return (
       <div>
         <h3>Buddy</h3>
@@ -84,6 +90,7 @@ var App = React.createClass({
           <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
+        {nothingMsg}
         <Timer />
       </div>
     );

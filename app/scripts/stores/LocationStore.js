@@ -1,8 +1,10 @@
 var alt = require('../alt');
+var resp = require('../response.js');
+var LocationActions = require('../actions/LocationActions');
 
 class LocationStore {
   constructor() {
-     this.locations = [];
+     this.locations = resp;
 
      this.bindListeners({
        handleUpdateLocations: LocationActions.UPDATE_LOCATIONS
