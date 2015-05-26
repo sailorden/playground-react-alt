@@ -8,19 +8,28 @@ var Ajax = require('react-ajax')
 var resp = require('./response.js');
 var AltContainer = require('alt/AltContainer');
 var LocationStore = require('./stores/LocationStore');
+var LocationActions = require('./actions/LocationActions');
 
-var TodoList = React.createClass({
+var BuddyList = React.createClass({
+  _handleRemove: function() {
+    console.log('remove handler clicked');
+
+  },
   render: function() {
     var createItem = function(user) {
-      return <div>
+      return (
+        <div>
           <div>
             <img src={user.data.avatar} />
           </div>
           {user.data.username}<br/>
           {user.data.firstName}<br/>
-          {user.data.lastName}
-      </div>;
-    };
+          {user.data.lastName}<br/>
+
+          <button onClick={this._handleRemove}>Delete me</button>
+        </div>
+      );
+    }.bind(this);
 
     return <div>{this.props.items.map(createItem)}</div>;
   }
@@ -85,7 +94,7 @@ var App = React.createClass({
         <h3>Buddy</h3>
         <input type="text" placeholder="Search" onChange={this.filterList}/>
 
-        <TodoList items={this.state.items} />
+        <BuddyList items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>
           <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
