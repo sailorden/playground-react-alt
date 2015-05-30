@@ -11,12 +11,15 @@ var LocationStore = require('./stores/LocationStore');
 var LocationActions = require('./actions/LocationActions');
 
 var BuddyList = React.createClass({
-  _handleRemove: function() {
+  _handleRemove: function(id) {
+    // https://facebook.github.io/react/tips/communicate-between-components.html
     console.log('remove handler clicked');
+    console.log(id)
 
   },
   render: function() {
     var createItem = function(user) {
+
       return (
         <div>
           <div>
@@ -26,7 +29,7 @@ var BuddyList = React.createClass({
           {user.data.firstName}<br/>
           {user.data.lastName}<br/>
 
-          <button onClick={this._handleRemove}>Delete me</button>
+          <button onClick={this._handleRemove.bind(this, user.id)}>Delete me</button>
         </div>
       );
     }.bind(this);
@@ -80,13 +83,6 @@ var App = React.createClass({
     LocationStore.unlisten(this.onChange);
   },
   render: function() {
-/*
-    if (!this.state.items.length) {
-      return (
-        <div>Nothing here</div>
-      );
-    }
-*/
     var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
 
     return (
