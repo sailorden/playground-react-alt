@@ -15,6 +15,7 @@ var BuddyList = React.createClass({
     // https://facebook.github.io/react/tips/communicate-between-components.html
     console.log('remove handler clicked');
     console.log(id)
+    LocationActions.remove(id);
 
   },
   render: function() {
@@ -72,16 +73,34 @@ var App = React.createClass({
     this.setState({items: updatedList});
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
+
   componentWillMount: function() {
-    console.log('componentWillMount');
     this.setState({items: this.state.initialItems})
   },
+
   componentDidMount: function() {
-    LocationStore.listen(this.onChange);
+    LocationStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
   },
+
   componentWillUnmount() {
-    LocationStore.unlisten(this.onChange);
+    LocationStore.unlisten(this._onStoreChange);
   },
+
+  _onStoreChange() { //TODO: setState is not working. also need to work in getting better debug tools. intial Items is not getting updated until filter works 
+    console.log('onChange fired');
+    this.setState({
+        initialItems: LocationStore.getState().locations
+    });
+    console.log('initial items:')
+    console.log(this.state.initialItems);
+    this.setState({
+        items: this.state.initialItems
+    });
+    console.log(this.state.items);
+
+    // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
+  },
+
   render: function() {
     var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
 
