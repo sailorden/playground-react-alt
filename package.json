@@ -2,6 +2,7 @@
   "name": "apple",
   "version": "0.0.0",
   "dependencies": {
+    "alt": "^0.16.7",
     "react-ajax": "^0.1.1"
   },
   "devDependencies": {
