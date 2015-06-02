@@ -3,7 +3,6 @@
 'use strict'
 
 var React = window.React = require('react')
-var Timer = require("./ui/Timer")
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
 var AltContainer = require('alt/AltContainer');
@@ -109,7 +108,7 @@ var App = React.createClass({
 
     return (
       <div>
-        <h3>Buddy</h3>
+        <h3>Buddy List</h3>
         <input type="text" placeholder="Search" onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
@@ -118,7 +117,6 @@ var App = React.createClass({
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
         {nothingMsg}
-        <Timer />
       </div>
     );
   }
