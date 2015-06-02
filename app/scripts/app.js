@@ -75,6 +75,7 @@ var App = React.createClass({
   },
 
   componentWillMount: function() {
+    console.log('in componentWillMount');
     this.setState({items: this.state.initialItems})
   },
 
@@ -86,17 +87,15 @@ var App = React.createClass({
     LocationStore.unlisten(this._onStoreChange);
   },
 
-  _onStoreChange() { //TODO: setState is not working. also need to work in getting better debug tools. intial Items is not getting updated until filter works 
+  _onStoreChange() {
     console.log('onChange fired');
+    // As we console logged, Location stores are indeed being deleted
     this.setState({
-        initialItems: LocationStore.getState().locations
-    });
-    console.log('initial items:')
-    console.log(this.state.initialItems);
-    this.setState({
-        items: this.state.initialItems
-    });
-    console.log(this.state.items);
+        initialItems: LocationStore.getState().locations,
+        items: LocationStore.getState().locations
+    }, function() {
+      console.log(this.state.items.length)
+    }.bind(this));
 
     // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
   },
