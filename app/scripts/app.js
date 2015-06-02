@@ -92,10 +92,14 @@ var App = React.createClass({
     // As we console logged, Location stores are indeed being deleted
     this.setState({
         initialItems: LocationStore.getState().locations,
-        items: LocationStore.getState().locations
+        items: this.state.items.filter(function(el) {
+            return el.id !== LocationStore.getState().lastRemoved
+        })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
     }, function() {
       console.log(this.state.items.length)
     }.bind(this));
+
+    console.log(LocationStore.getState().lastRemoved)
 
     // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
   },

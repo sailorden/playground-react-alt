@@ -6,6 +6,7 @@ var LocationActions = require('../actions/LocationActions');
 class LocationStore {
   constructor() {
      this.locations = resp;
+     this.lastRemoved = undefined;
 
 /*
      this.bindListeners({
@@ -21,12 +22,15 @@ class LocationStore {
     this.locations = this.locations.filter(function(el) {
       return el.id !== id
     });
+    this.lastRemoved = id;
 
   }
 
+  /*
   handleUpdateLocations(locations) {
     this.locations = locations;
   }
+  */
 }
 
 module.exports = alt.createStore(LocationStore, 'LocationStore');
