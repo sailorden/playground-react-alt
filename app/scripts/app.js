@@ -19,9 +19,12 @@ var BuddyList = React.createClass({
   },
   render: function() {
     var createItem = function(user) {
+      var listStyle = {
+          display: 'inline-block'
+      };
 
       return (
-        <div>
+        <div style={listStyle}>
           <div>
             <img src={user.data.avatar} />
           </div>
