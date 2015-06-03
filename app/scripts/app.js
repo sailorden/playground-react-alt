@@ -109,10 +109,11 @@ var App = React.createClass({
   render: function() {
     var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
 
+    // curly braces inside jsx attributes allow us to use JS expressions
     return (
       <div>
         <h3>Buddy List</h3>
-        <input type="text" placeholder="Search" onChange={this.filterList}/>
+        <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>
