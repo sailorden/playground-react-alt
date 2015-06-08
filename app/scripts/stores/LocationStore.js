@@ -1,22 +1,22 @@
 var alt = require('../alt');
 var resp = require('../response.js');
-var LocationActions = require('../actions/LocationActions');
+var BuddyActions = require('../actions/BuddyActions');
 
 // since we are using class/constructur method, all values assign to 'this' inside the store is accessible via LocationStore.getState()
-class LocationStore {
+class BuddyStore {
   constructor() {
-     this.locations = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
-     this.locationsAltered = resp; // our filtered state of list
+     this.buddys = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
+     this.buddysAltered = resp; // our filtered state of list
      this.lastRemoved = undefined;
 
-     this.bindAction(LocationActions.remove, this.onRemoveLocation);
-     this.bindAction(LocationActions.sort, this.onSort);
-     this.bindAction(LocationActions.updateAltered, this.onUpdateAltered);
+     this.bindAction(BuddyActions.remove, this.onRemoveLocation);
+     this.bindAction(BuddyActions.sort, this.onSort);
+     this.bindAction(BuddyActions.updateAltered, this.onUpdateAltered);
   }
 
   onUpdateAltered(list) {
     console.log(list)
-     this.locationsAltered = list; 
+     this.buddysAltered = list; 
   }
 
   onSort(info) {
@@ -27,10 +27,10 @@ class LocationStore {
 
     // we sort both of our stores so that if user is in filtered mode, his sorting changes will remain after he exists filtered mode
     
-    this.locationsAltered = this.locationsAltered.sort(function(a,b) {
+    this.buddysAltered = this.buddysAltered.sort(function(a,b) {
         return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
     });
-    this.locations= this.locations.sort(function(a,b) {
+    this.buddys= this.buddys.sort(function(a,b) {
         return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
     });
   }
@@ -38,16 +38,16 @@ class LocationStore {
   onRemoveLocation(id) {
     if (!id) return
     
-    this.locations = this.locations.filter(function(el) {
+    this.buddys = this.buddys.filter(function(el) {
       return el.id !== id
     });
-    this.locationsAltered = this.locationsAltered.filter(function(el) {
+    this.buddysAltered = this.buddysAltered.filter(function(el) {
       return el.id !== id
-    }); // repeat the same filtration for locations altered so that we dont lose altered state upon delete
+    }); // repeat the same filtration for buddys altered so that we dont lose altered state upon delete
     this.lastRemoved = id;
 
   }
 
 }
 
-module.exports = alt.createStore(LocationStore, 'LocationStore');
+module.exports = alt.createStore(BuddyStore, 'BuddyStore');

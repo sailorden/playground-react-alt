@@ -8,14 +8,14 @@ var resp = require('./response.js');
 var Sort = require('./components/Sort');
 var AltContainer = require('alt/AltContainer');
 var LocationStore = require('./stores/LocationStore');
-var LocationActions = require('./actions/LocationActions');
+var BuddyActions = require('./actions/BuddyActions');
 
 var BuddyList = React.createClass({
   _handleRemove: function(id) {
     // https://facebook.github.io/react/tips/communicate-between-components.html
     console.log('remove handler clicked');
     console.log(id)
-    LocationActions.remove(id);
+    BuddyActions.remove(id);
 
   },
   render: function() {
@@ -45,7 +45,7 @@ var BuddyList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      items: LocationStore.getState().locations,  // we are returned {locatins: [..]}
+      items: LocationStore.getState().buddys,  // we are returned {locatins: [..]}
       text: ''
     };
   },
@@ -61,7 +61,7 @@ var App = React.createClass({
 
   filterList: function(event) {
     // use locations as it is the base of our filtration
-    var updatedList = LocationStore.getState().locations;
+    var updatedList = LocationStore.getState().buddys;
     var lowerCasedInput = event.target.value.toLowerCase()
 
     updatedList = updatedList.filter(function(item) {
@@ -73,7 +73,7 @@ var App = React.createClass({
     });
 
     console.log(updatedList)
-    LocationActions.updateAltered(updatedList)
+    BuddyActions.updateAltered(updatedList)
 
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
@@ -94,7 +94,7 @@ var App = React.createClass({
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
     this.replaceState({
-        items: LocationStore.getState().locationsAltered 
+        items: LocationStore.getState().buddysAltered 
     }, function() {
       console.log('Items length:');
       console.log(this.state.items.length)
