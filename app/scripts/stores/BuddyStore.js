@@ -2,14 +2,14 @@ var alt = require('../alt');
 var resp = require('../response.js');
 var BuddyActions = require('../actions/BuddyActions');
 
-// since we are using class/constructur method, all values assign to 'this' inside the store is accessible via LocationStore.getState()
+// since we are using class/constructur method, all values assign to 'this' inside the store is accessible via BuddyStore.getState()
 class BuddyStore {
   constructor() {
      this.buddys = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
      this.buddysAltered = resp; // our filtered state of list
      this.lastRemoved = undefined;
 
-     this.bindAction(BuddyActions.remove, this.onRemoveLocation);
+     this.bindAction(BuddyActions.remove, this.onRemoveBuddy);
      this.bindAction(BuddyActions.sort, this.onSort);
      this.bindAction(BuddyActions.updateAltered, this.onUpdateAltered);
   }
@@ -35,7 +35,7 @@ class BuddyStore {
     });
   }
   
-  onRemoveLocation(id) {
+  onRemoveBuddy(id) {
     if (!id) return
     
     this.buddys = this.buddys.filter(function(el) {
