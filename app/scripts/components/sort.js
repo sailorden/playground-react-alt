@@ -1,6 +1,6 @@
 'use strict'
 var React = require('react');
-var LocationStore = require('../stores/LocationStore');
+var BuddyStore = require('../stores/BuddyStore');
 var BuddyActions = require('../actions/BuddyActions');
 
 var Sort = React.createClass({

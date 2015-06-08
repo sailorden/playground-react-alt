@@ -7,7 +7,7 @@ var Ajax = require('react-ajax')
 var resp = require('./response.js');
 var Sort = require('./components/Sort');
 var AltContainer = require('alt/AltContainer');
-var LocationStore = require('./stores/LocationStore');
+var BuddyStore = require('./stores/BuddyStore');
 var BuddyActions = require('./actions/BuddyActions');
 
 var BuddyList = React.createClass({
@@ -45,7 +45,7 @@ var BuddyList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      items: LocationStore.getState().buddys,  // we are returned {locatins: [..]}
+      items: BuddyStore.getState().buddys,  // we are returned {locatins: [..]}
       text: ''
     };
   },
@@ -60,8 +60,8 @@ var App = React.createClass({
   },
 
   filterList: function(event) {
-    // use locations as it is the base of our filtration
-    var updatedList = LocationStore.getState().buddys;
+    // use buddys as opposed to buddysFilteredList as it is the base of our filtration
+    var updatedList = BuddyStore.getState().buddys;
     var lowerCasedInput = event.target.value.toLowerCase()
 
     updatedList = updatedList.filter(function(item) {
@@ -83,24 +83,24 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
-    LocationStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
+    BuddyStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
   },
 
   componentWillUnmount() {
-    LocationStore.unlisten(this._onStoreChange);
+    BuddyStore.unlisten(this._onStoreChange);
   },
 
   _onStoreChange() {
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
     this.replaceState({
-        items: LocationStore.getState().buddysAltered 
+        items: BuddyStore.getState().buddysAltered 
     }, function() {
       console.log('Items length:');
       console.log(this.state.items.length)
     }.bind(this));
 
-    console.log(LocationStore.getState().lastRemoved)
+    console.log(BuddyStore.getState().lastRemoved)
 
     // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
   },
