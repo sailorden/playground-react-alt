@@ -2,7 +2,7 @@
 
 var alt = require('../alt');
 
-class LocationActions {
+class BuddyActions {
         constructor() {
                 this.generateActions(
                         'remove',
@@ -16,4 +16,4 @@ class LocationActions {
         }
 }
 
-module.exports = alt.createActions(LocationActions);
+module.exports = alt.createActions(BuddyActions);
