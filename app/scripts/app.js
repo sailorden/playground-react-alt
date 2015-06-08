@@ -1,23 +1,41 @@
 //echo '{"id": "{{unixtime}}" , "data": {"avatar": "{{avatar}}", "firstName": "{{name.first}}", "lastName": "{{name.last}}", "username": "{{username}}"}},' | phony --max 100 > response.json
 
+'use strict'
+
 var React = window.React = require('react')
-var Timer = require("./ui/Timer")
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
-console.log(resp)
+var AltContainer = require('alt/AltContainer');
+var LocationStore = require('./stores/LocationStore');
+var LocationActions = require('./actions/LocationActions');
 
-var TodoList = React.createClass({
+var BuddyList = React.createClass({
+  _handleRemove: function(id) {
+    // https://facebook.github.io/react/tips/communicate-between-components.html
+    console.log('remove handler clicked');
+    console.log(id)
+    LocationActions.remove(id);
+
+  },
   render: function() {
     var createItem = function(user) {
-      return <div>
+      var listStyle = {
+          display: 'inline-block'
+      };
+
+      return (
+        <div style={listStyle}>
           <div>
             <img src={user.data.avatar} />
           </div>
           {user.data.username}<br/>
           {user.data.firstName}<br/>
-          {user.data.lastName}
-      </div>;
-    };
+          {user.data.lastName}<br/>
+
+          <button onClick={this._handleRemove.bind(this, user.id)}>Delete me</button>
+        </div>
+      );
+    }.bind(this);
 
     return <div>{this.props.items.map(createItem)}</div>;
   }
@@ -26,7 +44,7 @@ var TodoList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: [], 
+      initialItems: LocationStore.getState().locations,  // we are returned {locatins: [..]}
       items: [],
       text: ''
     };
@@ -57,29 +75,52 @@ var App = React.createClass({
     this.setState({items: updatedList});
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
+
   componentWillMount: function() {
-    console.log('componentWillMount');
+    console.log('in componentWillMount');
     this.setState({items: this.state.initialItems})
   },
+
   componentDidMount: function() {
-    setTimeout(function() {
-        console.log('componentDidMount');
-        this.setState({initialItems: resp});
-        this.setState({items: this.state.initialItems});
-    }.bind(this), 300); // use this timeout to simulate an AJAX request. otherwise, initItems is not set on first render as desired
+    LocationStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
   },
+
+  componentWillUnmount() {
+    LocationStore.unlisten(this._onStoreChange);
+  },
+
+  _onStoreChange() {
+    console.log('onChange fired');
+    // As we console logged, Location stores are indeed being deleted
+    this.setState({
+        initialItems: LocationStore.getState().locations,
+        items: this.state.items.filter(function(el) {
+            return el.id !== LocationStore.getState().lastRemoved
+        })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
+    }, function() {
+      console.log(this.state.items.length)
+    }.bind(this));
+
+    console.log(LocationStore.getState().lastRemoved)
+
+    // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
+  },
+
   render: function() {
+    var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
+
+    // curly braces inside jsx attributes allow us to use JS expressions
     return (
       <div>
-        <h3>Buddy</h3>
-        <input type="text" placeholder="Search" onChange={this.filterList}/>
+        <h3>Buddy List</h3>
+        <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
 
-        <TodoList items={this.state.items} />
+        <BuddyList items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>
           <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
-        <Timer />
+        {nothingMsg}
       </div>
     );
   }
