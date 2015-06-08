@@ -7,7 +7,7 @@ class BuddyActions {
                 this.generateActions(
                         'remove',
                         'sort',
-                        'updateAltered'
+                        'updateFiltered'
                 );
         }
 

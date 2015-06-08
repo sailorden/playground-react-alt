@@ -6,17 +6,17 @@ var BuddyActions = require('../actions/BuddyActions');
 class BuddyStore {
   constructor() {
      this.buddys = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
-     this.buddysAltered = resp; // our filtered state of list
+     this.buddysFiltered = resp; // our filtered state of list
      this.lastRemoved = undefined;
 
      this.bindAction(BuddyActions.remove, this.onRemoveBuddy);
      this.bindAction(BuddyActions.sort, this.onSort);
-     this.bindAction(BuddyActions.updateAltered, this.onUpdateAltered);
+     this.bindAction(BuddyActions.updateFiltered, this.onUpdateFiltered);
   }
 
-  onUpdateAltered(list) {
+  onUpdateFiltered(list) {
     console.log(list)
-     this.buddysAltered = list; 
+     this.buddysFiltered = list; 
   }
 
   onSort(info) {
@@ -27,7 +27,7 @@ class BuddyStore {
 
     // we sort both of our stores so that if user is in filtered mode, his sorting changes will remain after he exists filtered mode
     
-    this.buddysAltered = this.buddysAltered.sort(function(a,b) {
+    this.buddysFiltered = this.buddysFiltered.sort(function(a,b) {
         return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
     });
     this.buddys= this.buddys.sort(function(a,b) {
@@ -41,7 +41,7 @@ class BuddyStore {
     this.buddys = this.buddys.filter(function(el) {
       return el.id !== id
     });
-    this.buddysAltered = this.buddysAltered.filter(function(el) {
+    this.buddysFiltered = this.buddysFiltered.filter(function(el) {
       return el.id !== id
     }); // repeat the same filtration for buddys altered so that we dont lose altered state upon delete
     this.lastRemoved = id;
