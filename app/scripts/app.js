@@ -60,6 +60,7 @@ var App = React.createClass({
   },
 
   filterList: function(event) {
+    // use locations as it is the base of our filtration
     var updatedList = LocationStore.getState().locations;
     var lowerCasedInput = event.target.value.toLowerCase()
 

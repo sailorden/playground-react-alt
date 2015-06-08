@@ -6,7 +6,7 @@ var LocationActions = require('../actions/LocationActions');
 class LocationStore {
   constructor() {
      this.locations = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
-     this.locationsAltered = resp;
+     this.locationsAltered = resp; // our filtered state of list
      this.lastRemoved = undefined;
 
      this.bindAction(LocationActions.remove, this.onRemoveLocation);
@@ -24,8 +24,13 @@ class LocationStore {
     let sortParam = info.sortParam;
     let isAsc = info.isAsc ? 1: -1;
     console.log(isAsc)
+
+    // we sort both of our stores so that if user is in filtered mode, his sorting changes will remain after he exists filtered mode
     
     this.locationsAltered = this.locationsAltered.sort(function(a,b) {
+        return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
+    });
+    this.locations= this.locations.sort(function(a,b) {
         return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
     });
   }
