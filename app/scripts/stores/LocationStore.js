@@ -14,6 +14,11 @@ class LocationStore {
      })
 */
      this.bindAction(LocationActions.remove, this.onRemoveLocation);
+     this.bindAction(LocationActions.sort, this.onSort);
+  }
+
+  onSort(info) {
+    console.log(info)
   }
   
   onRemoveLocation(id) {

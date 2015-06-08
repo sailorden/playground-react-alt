@@ -5,6 +5,7 @@
 var React = window.React = require('react')
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
+var Sort = require('./components/Sort');
 var AltContainer = require('alt/AltContainer');
 var LocationStore = require('./stores/LocationStore');
 var LocationActions = require('./actions/LocationActions');
@@ -114,6 +115,7 @@ var App = React.createClass({
       <div>
         <h3>Buddy List</h3>
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
+        <Sort />
 
         <BuddyList items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>
