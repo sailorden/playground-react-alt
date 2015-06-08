@@ -26,13 +26,21 @@ class BuddyStore {
     console.log(isAsc)
 
     // we sort both of our stores so that if user is in filtered mode, his sorting changes will remain after he exists filtered mode
-    
-    this.buddysFiltered = this.buddysFiltered.sort(function(a,b) {
-        return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
-    });
-    this.buddys= this.buddys.sort(function(a,b) {
-        return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
-    });
+    var sortFunc = function(a,b) {
+      /*
+        if (a.data[sortParam] > b.data[sortParam]) {
+            return isAsc * 1;
+        } 
+        if (a.data[sortParam] < b.data[sortParam]) {
+            return isAsc * -1;
+        }
+        return 0;
+        */
+        return isAsc * a.data[sortParam].toLowerCase().localeCompare(b.data[sortParam].toLowerCase())
+    }
+
+    this.buddysFiltered = this.buddysFiltered.sort(sortFunc);
+    this.buddys= this.buddys.sort(sortFunc);
   }
   
   onRemoveBuddy(id) {

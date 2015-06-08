@@ -93,7 +93,7 @@ var App = React.createClass({
   _onStoreChange() {
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
-    this.replaceState({
+    this.setState({
         items: BuddyStore.getState().buddysFiltered 
     }, function() {
       console.log('Items length:');
