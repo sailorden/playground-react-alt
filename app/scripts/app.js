@@ -45,8 +45,7 @@ var BuddyList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: LocationStore.getState().locations,  // we are returned {locatins: [..]}
-      items: [],
+      items: LocationStore.getState().locations,  // we are returned {locatins: [..]}
       text: ''
     };
   },
@@ -61,7 +60,7 @@ var App = React.createClass({
   },
 
   filterList: function(event) {
-    var updatedList = this.state.initialItems;
+    var updatedList = LocationStore.getState().locations;
     var lowerCasedInput = event.target.value.toLowerCase()
 
     updatedList = updatedList.filter(function(item) {
@@ -75,13 +74,11 @@ var App = React.createClass({
     console.log(updatedList)
     LocationActions.updateAltered(updatedList)
 
-    //this.setState({items: updatedList});
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
 
   componentWillMount: function() {
     console.log('in componentWillMount');
-    this.setState({items: this.state.initialItems})
   },
 
   componentDidMount: function() {
@@ -96,11 +93,9 @@ var App = React.createClass({
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
     this.replaceState({
-        initialItems: LocationStore.getState().locations,
         items: LocationStore.getState().locationsAltered 
     }, function() {
       console.log('Items length:');
-      console.log(this.state.initialItems)
       console.log(this.state.items.length)
     }.bind(this));
 

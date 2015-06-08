@@ -9,11 +9,6 @@ class LocationStore {
      this.locationsAltered = resp;
      this.lastRemoved = undefined;
 
-/*
-     this.bindListeners({
-       handleUpdateLocations: LocationActions.UPDATE_LOCATIONS
-     })
-*/
      this.bindAction(LocationActions.remove, this.onRemoveLocation);
      this.bindAction(LocationActions.sort, this.onSort);
      this.bindAction(LocationActions.updateAltered, this.onUpdateAltered);
@@ -41,7 +36,9 @@ class LocationStore {
     this.locations = this.locations.filter(function(el) {
       return el.id !== id
     });
-    this.locationsAltered = this.locations;
+    this.locationsAltered = this.locationsAltered.filter(function(el) {
+      return el.id !== id
+    }); // repeat the same filtration for locations altered so that we dont lose altered state upon delete
     this.lastRemoved = id;
 
   }
