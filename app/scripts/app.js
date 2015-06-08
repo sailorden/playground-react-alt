@@ -5,42 +5,11 @@
 var React = window.React = require('react')
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
-var Sort = require('./components/Sort');
+var Sort = require('./components/sort');
+var BuddyNodes = require('./components/buddynodes');
 var AltContainer = require('alt/AltContainer');
 var BuddyStore = require('./stores/BuddyStore');
 var BuddyActions = require('./actions/BuddyActions');
-
-var BuddyList = React.createClass({
-  _handleRemove: function(id) {
-    // https://facebook.github.io/react/tips/communicate-between-components.html
-    console.log('remove handler clicked');
-    console.log(id)
-    BuddyActions.remove(id);
-
-  },
-  render: function() {
-    var createItem = function(user) {
-      var listStyle = {
-          display: 'inline-block'
-      };
-
-      return (
-        <div style={listStyle}>
-          <div>
-            <img src={user.data.avatar} />
-          </div>
-          {user.data.username}<br/>
-          {user.data.firstName}<br/>
-          {user.data.lastName}<br/>
-
-          <button onClick={this._handleRemove.bind(this, user.id)}>Delete me</button>
-        </div>
-      );
-    }.bind(this);
-
-    return <div>{this.props.items.map(createItem)}</div>;
-  }
-});
 
 var App = React.createClass({
   getInitialState: function() {
@@ -115,7 +84,7 @@ var App = React.createClass({
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
         <Sort />
 
-        <BuddyList items={this.state.items} />
+        <BuddyNodes items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>
           <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
