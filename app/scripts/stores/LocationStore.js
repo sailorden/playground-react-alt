@@ -19,6 +19,13 @@ class LocationStore {
 
   onSort(info) {
     console.log(info)
+    let sortParam = info.sortParam;
+    let isAsc = info.isAsc ? 1: -1;
+    console.log(isAsc)
+    
+    this.locations = this.locations.sort(function(a,b) {
+        return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
+    });
   }
   
   onRemoveLocation(id) {

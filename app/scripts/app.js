@@ -93,12 +93,14 @@ var App = React.createClass({
   _onStoreChange() {
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
-    this.setState({
+    this.replaceState({
         initialItems: LocationStore.getState().locations,
         items: this.state.items.filter(function(el) {
             return el.id !== LocationStore.getState().lastRemoved
         })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
     }, function() {
+      console.log('Items length:');
+      console.log(this.state.initialItems)
       console.log(this.state.items.length)
     }.bind(this));
 

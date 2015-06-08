@@ -4,20 +4,22 @@ var LocationStore = require('../stores/LocationStore');
 var LocationActions = require('../actions/LocationActions');
 
 var Sort = React.createClass({
-    _toggleSortDisplay: function(event, b) {
-        console.log(event)
-        console.log(b)
+    _toggleSortDisplay: function(isAsc, event) { // if we are passing in params to this eventHandler, then the event param is added by react to the end of our arguments list
+        console.log(isAsc)
         console.log(this)
   // in the mean time, lets just sort by Username Ascending
         LocationActions.sort({
-          'sortType': 'username',
-          'isAsc': true
+          'sortParam': 'username',
+          'isAsc': isAsc
         });
     },
 
     render() {
         return (
-            <div onClick={this._toggleSortDisplay}>Sort</div>
+          <div>
+            <div onClick={this._toggleSortDisplay.bind(this, true)}>Sort Asc</div>
+            <div onClick={this._toggleSortDisplay.bind(this, false)}>Sort Desc</div>
+          </div>
         )
     }
 });
