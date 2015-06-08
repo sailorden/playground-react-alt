@@ -5,7 +5,8 @@ var LocationActions = require('../actions/LocationActions');
 // since we are using class/constructur method, all values assign to 'this' inside the store is accessible via LocationStore.getState()
 class LocationStore {
   constructor() {
-     this.locations = resp;
+     this.locations = resp; // pretend this was received from Ajax call and we need to store a clean copy of it
+     this.locationsAltered = resp;
      this.lastRemoved = undefined;
 
 /*
@@ -15,6 +16,12 @@ class LocationStore {
 */
      this.bindAction(LocationActions.remove, this.onRemoveLocation);
      this.bindAction(LocationActions.sort, this.onSort);
+     this.bindAction(LocationActions.updateAltered, this.onUpdateAltered);
+  }
+
+  onUpdateAltered(list) {
+    console.log(list)
+     this.locationsAltered = list; 
   }
 
   onSort(info) {
@@ -23,7 +30,7 @@ class LocationStore {
     let isAsc = info.isAsc ? 1: -1;
     console.log(isAsc)
     
-    this.locations = this.locations.sort(function(a,b) {
+    this.locationsAltered = this.locationsAltered.sort(function(a,b) {
         return isAsc * a.data[sortParam].localeCompare(b.data[sortParam])
     });
   }
@@ -34,15 +41,11 @@ class LocationStore {
     this.locations = this.locations.filter(function(el) {
       return el.id !== id
     });
+    this.locationsAltered = this.locations;
     this.lastRemoved = id;
 
   }
 
-  /*
-  handleUpdateLocations(locations) {
-    this.locations = locations;
-  }
-  */
 }
 
 module.exports = alt.createStore(LocationStore, 'LocationStore');

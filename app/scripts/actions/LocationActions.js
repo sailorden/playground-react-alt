@@ -6,7 +6,8 @@ class LocationActions {
         constructor() {
                 this.generateActions(
                         'remove',
-                        'sort'
+                        'sort',
+                        'updateAltered'
                 );
         }
 

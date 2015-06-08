@@ -59,11 +59,11 @@ var App = React.createClass({
     var nextItems = this.state.items.concat([this.state.text]);
     this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
+
   filterList: function(event) {
     var updatedList = this.state.initialItems;
     var lowerCasedInput = event.target.value.toLowerCase()
 
-    
     updatedList = updatedList.filter(function(item) {
         return [item.data.username.toLowerCase(),
                item.data.firstName.toLowerCase(),
@@ -73,7 +73,9 @@ var App = React.createClass({
     });
 
     console.log(updatedList)
-    this.setState({items: updatedList});
+    LocationActions.updateAltered(updatedList)
+
+    //this.setState({items: updatedList});
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
 
@@ -95,9 +97,7 @@ var App = React.createClass({
     // As we console logged, Location stores are indeed being deleted
     this.replaceState({
         initialItems: LocationStore.getState().locations,
-        items: this.state.items.filter(function(el) {
-            return el.id !== LocationStore.getState().lastRemoved
-        })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
+        items: LocationStore.getState().locationsAltered 
     }, function() {
       console.log('Items length:');
       console.log(this.state.initialItems)
