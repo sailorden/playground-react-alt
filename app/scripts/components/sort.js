@@ -17,8 +17,8 @@ var Sort = React.createClass({
     render() {
         return (
           <div>
-            <div onClick={this._toggleSortDisplay.bind(this, true)}>Sort Asc</div>
-            <div onClick={this._toggleSortDisplay.bind(this, false)}>Sort Desc</div>
+            <button onClick={this._toggleSortDisplay.bind(this, true)}>Sort Asc</button>
+            <button onClick={this._toggleSortDisplay.bind(this, false)}>Sort Desc</button>
           </div>
         )
     }
