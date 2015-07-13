@@ -65,7 +65,6 @@ var BuddyList = React.createClass({
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: LocationStore.getState().locations,  // we are returned {locatins: [..]}
       items: [],
       text: ''
     };
@@ -76,11 +75,9 @@ var App = React.createClass({
   },
 
   filterList: function(event) {
-    var updatedList = this.state.initialItems;
-    var lowerCasedInput = event.target.value.toLowerCase()
-
+    var lowerCasedInput = event.target.value.toLowerCase();
     
-    updatedList = updatedList.filter(function(item) {
+    var updatedList = LocationStore.getState().locations.filter(function(item) {
         return item.note.toLowerCase().search(lowerCasedInput) !== -1
     });
 
@@ -91,7 +88,7 @@ var App = React.createClass({
 
   componentWillMount: function() {
     console.log('in componentWillMount');
-    this.setState({items: this.state.initialItems})
+    this.setState({items: LocationStore.getState().locations})
   },
 
   componentDidMount: function() {
@@ -108,7 +105,6 @@ var App = React.createClass({
     // As we console logged, Location stores are indeed being deleted
     // ---- the correct behavior is to, reapply the filter on updated storage change. **
     this.setState({
-        initialItems: LocationStore.getState().locations,
         items: LocationStore.getState().locations 
         /*
         items: this.state.items.filter(function(el) {
