@@ -6,7 +6,8 @@ class LocationActions {
         constructor() {
                 this.generateActions(
                         'add',
-                        'remove'
+                        'remove',
+                        'edit'
                 );
         }
 

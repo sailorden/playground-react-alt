@@ -15,6 +15,13 @@ var BuddyList = React.createClass({
     LocationActions.remove(id);
 
   },
+
+  _onEditNote: function(id, e) {
+    console.log(arguments)
+    console.log(e.target.value);
+    LocationActions.edit([id, e.target.value]);
+  },
+
   render: function() {
     var createItem = function(note) {
       var width = '200px';
@@ -40,7 +47,7 @@ var BuddyList = React.createClass({
 
       return (
         <div style={listStyle}>
-          <textarea style={textArea} value={note.note}>
+          <textarea style={textArea} value={note.note} onChange={this._onEditNote.bind(this, note.id)}>
           </textarea>
           <img
             src="../img/clear.png"

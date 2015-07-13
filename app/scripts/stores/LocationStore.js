@@ -15,6 +15,7 @@ class LocationStore {
 
      this.bindAction(LocationActions.add, this.onAddNote);
      this.bindAction(LocationActions.remove, this.onRemoveLocation);
+     this.bindAction(LocationActions.edit, this.onEditNote);
   }
   
   onRemoveLocation(id) {
@@ -35,6 +36,14 @@ class LocationStore {
     var tempArray = Array.prototype.slice.call(this.locations, 0)
     tempArray.unshift(data);
     this.locations = tempArray;
+  }
+
+  onEditNote(data) {
+    console.log(data)
+    this.locations = this.locations.map(function(el) {
+      if (el.id !== data[0]) return el
+      return {id: data[0], note: data[1]}
+    });
   }
 }
 
