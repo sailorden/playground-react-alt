@@ -72,7 +72,7 @@ var App = React.createClass({
   },
 
   onAdd: function(e) {
-    LocationActions.add({ id: Math.random() * 100000, text: ''});
+    LocationActions.add({ id: Math.random() * 100000, note: ''});
   },
 
   filterList: function(event) {
@@ -81,11 +81,7 @@ var App = React.createClass({
 
     
     updatedList = updatedList.filter(function(item) {
-        return [item.data.username.toLowerCase(),
-               item.data.firstName.toLowerCase(),
-               item.data.lastName.toLowerCase()]
-                   .map(function(el) { return el.search(lowerCasedInput)})
-                   .some(function(el) {return el !== -1});
+        return item.note.toLowerCase().search(lowerCasedInput) !== -1
     });
 
     console.log(updatedList)
@@ -110,6 +106,7 @@ var App = React.createClass({
     console.log('onChange fired');
 
     // As we console logged, Location stores are indeed being deleted
+    // ---- the correct behavior is to, reapply the filter on updated storage change. **
     this.setState({
         initialItems: LocationStore.getState().locations,
         items: LocationStore.getState().locations 
