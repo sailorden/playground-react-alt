@@ -19,12 +19,13 @@ class LocationStore {
   
   onRemoveLocation(id) {
     if (!id) return
+      console.log(id)
     
     this.locations = this.locations.filter(function(el) {
       return el.id !== id
     });
     this.lastRemoved = id;
-
+    console.log(this.locations)
   }
 
   onAddNote(data) {

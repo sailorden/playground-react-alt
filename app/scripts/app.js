@@ -1,5 +1,3 @@
-//echo '{"id": "{{unixtime}}" , "data": {"avatar": "{{avatar}}", "firstName": "{{name.first}}", "lastName": "{{name.last}}", "username": "{{username}}"}},' | phony --max 100 > response.json
-
 'use strict'
 
 var React = window.React = require('react')
@@ -42,8 +40,7 @@ var BuddyList = React.createClass({
 
       return (
         <div style={listStyle}>
-          <textarea style={textArea}>
-            {note.note}
+          <textarea style={textArea} value={note.note}>
           </textarea>
           <img
             src="../img/clear.png"
@@ -104,7 +101,6 @@ var App = React.createClass({
 
   _onStoreChange() {
     console.log('onChange fired');
-
 
     // As we console logged, Location stores are indeed being deleted
     this.setState({
