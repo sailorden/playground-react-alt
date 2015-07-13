@@ -26,11 +26,8 @@ var BuddyList = React.createClass({
       return (
         <div style={listStyle}>
           <div>
-            <img src={user.data.avatar} />
+            {user.note}
           </div>
-          {user.data.username}<br/>
-          {user.data.firstName}<br/>
-          {user.data.lastName}<br/>
 
           <button onClick={this._handleRemove.bind(this, user.id)}>Delete me</button>
         </div>
@@ -49,15 +46,11 @@ var App = React.createClass({
       text: ''
     };
   },
-  onChangeAddField: function(e) {
-    this.setState({text: e.target.value});// calling this triggers UI update
-  },
-  onSubmitAddField: function(e) {
-    e.preventDefault();
 
-    var nextItems = this.state.items.concat([this.state.text]);
-    this.setState({items: nextItems, text: ''}); //calling this triggers UI update
+  onAdd: function(e) {
+    LocationActions.add({ id: Math.random() * 100000, text: ''});
   },
+
   filterList: function(event) {
     var updatedList = this.state.initialItems;
     var lowerCasedInput = event.target.value.toLowerCase()
@@ -91,17 +84,23 @@ var App = React.createClass({
 
   _onStoreChange() {
     console.log('onChange fired');
+
+
     // As we console logged, Location stores are indeed being deleted
     this.setState({
         initialItems: LocationStore.getState().locations,
+        items: LocationStore.getState().locations 
+        /*
         items: this.state.items.filter(function(el) {
             return el.id !== LocationStore.getState().lastRemoved
         })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
+       */
     }, function() {
       console.log(this.state.items.length)
+    console.log(this.state.items)
     }.bind(this));
 
-    console.log(LocationStore.getState().lastRemoved)
+    //console.log(LocationStore.getState().lastRemoved)
 
     // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
   },
@@ -116,10 +115,7 @@ var App = React.createClass({
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
-        <form onSubmit={this.onSubmitAddField}>
-          <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
-          <button>{'Add #' + (this.state.items.length + 1)}</button>
-        </form>
+        <button onClick={this.onAdd}>{'Add #'}</button>
         {nothingMsg}
       </div>
     );

@@ -5,6 +5,7 @@ var alt = require('../alt');
 class LocationActions {
         constructor() {
                 this.generateActions(
+                        'add',
                         'remove'
                 );
         }
