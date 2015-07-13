@@ -18,18 +18,38 @@ var BuddyList = React.createClass({
 
   },
   render: function() {
-    var createItem = function(user) {
+    var createItem = function(note) {
+      var width = '200px';
+
       var listStyle = {
-          display: 'inline-block'
+          display: 'inline-block',
+          position: 'relative',
+          width: width,
+          margin: '15px'
+      };
+      
+      var textArea = {
+          height: '100px',
+          width: width,
+          resize: 'none'
+      };
+
+      var img = {
+        position: 'absolute',
+        bottom: '10px',
+        right: '2px'
       };
 
       return (
         <div style={listStyle}>
-          <div>
-            {user.note}
-          </div>
+          <textarea style={textArea}>
+            {note.note}
+          </textarea>
+          <img
+            src="../img/clear.png"
+            onClick={this._handleRemove.bind(this, note.id)}
+            style={img}/>
 
-          <button onClick={this._handleRemove.bind(this, user.id)}>Delete me</button>
         </div>
       );
     }.bind(this);
@@ -111,11 +131,11 @@ var App = React.createClass({
     // curly braces inside jsx attributes allow us to use JS expressions
     return (
       <div>
-        <h3>Buddy List</h3>
+        <h3>Notes Manager</h3>
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
-        <button onClick={this.onAdd}>{'Add #'}</button>
+        <img src="../img/add-circle.svg"  onClick={this.onAdd}>{'Add #'}</img>
         {nothingMsg}
       </div>
     );
