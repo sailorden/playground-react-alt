@@ -127,15 +127,25 @@ var App = React.createClass({
 
   render: function() {
     var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
+    var mainDiv = {
+      position: 'relative',
+      height: 'inherit',
+      width: 'inherit'
+    };
+    var addStyle = {
+      position: 'absolute',
+      bottom: '40px',
+      right: '40px'
+    };
 
     // curly braces inside jsx attributes allow us to use JS expressions
     return (
-      <div>
+      <div style={mainDiv}>
         <h3>Notes Manager</h3>
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
-        <img src="../img/add-circle.svg"  onClick={this.onAdd}>{'Add #'}</img>
+        <img src="../img/add-circle.png" style={addStyle} onClick={this.onAdd}/>
         {nothingMsg}
       </div>
     );
