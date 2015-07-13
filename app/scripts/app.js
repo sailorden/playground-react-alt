@@ -46,7 +46,7 @@ var BuddyList = React.createClass({
       };
 
       return (
-        <div style={listStyle}>
+        <div key={note.id} style={listStyle}>
           <textarea style={textArea} value={note.note} onChange={this._onEditNote.bind(this, note.id)}>
           </textarea>
           <img
