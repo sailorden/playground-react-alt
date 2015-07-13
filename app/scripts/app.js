@@ -142,7 +142,7 @@ var App = React.createClass({
     return (
       <div style={mainDiv}>
         <h3>Notes Manager</h3>
-        <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
+        <input className="filter-field" type="text" placeholder="Search my notes..." onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
         <img src="../img/add-circle.png" style={addStyle} onClick={this.onAdd}/>
