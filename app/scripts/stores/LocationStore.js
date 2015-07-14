@@ -6,8 +6,10 @@ var localStorage = Store.get('notes');
 
 // in case its empty, bootstrap
 localStorage = localStorage || [
-  {id: 1, note: 'Happy to be here'},
-  {id: 2, note: 'Sad to be here'}
+  {id: 1, note: 'I am a sample note.'},
+  {id: 2, note: 'Delete me with the X button on lower right of note'},
+  {id: 3, note: 'Add another note with the + button on lower right of screen'},
+  {id: 4, note: 'For fun, try searching through your notes :)'}
 ];
 
 function updateStorage(data) {
@@ -27,7 +29,7 @@ class LocationStore {
   
   onRemoveLocation(id) {
     if (!id) return
-      console.log(id)
+    console.log(id)
     
     this.locations = this.locations.filter(function(el) {
       return el.id !== id
@@ -50,7 +52,7 @@ class LocationStore {
   onEditNote(data) {
     console.log(data)
     this.locations = this.locations.map(function(el) {
-      if (el.id !== data[0]) return el
+      if (el.id !== data[0]) {return el}
       return {id: data[0], note: data[1]}
     });
     updateStorage(this.locations);

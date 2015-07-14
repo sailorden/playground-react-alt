@@ -132,16 +132,20 @@ var App = React.createClass({
       width: 'inherit'
     };
     var addStyle = {
-      position: 'absolute',
+      position: 'fixed',
       bottom: '40px',
       right: '40px'
     };
 
+    var margin15 = {
+      margin: '15px'
+    }
+
     // curly braces inside jsx attributes allow us to use JS expressions
     return (
       <div style={mainDiv}>
-        <h3>Notes Manager</h3>
-        <input className="filter-field" type="text" placeholder="Search my notes..." onChange={this.filterList}/>
+        <h3 style={margin15}>Notes Manager</h3>
+        <input style={margin15} className="filter-field" type="text" placeholder="Search my notes..." onChange={this.filterList}/>
 
         <BuddyList items={this.state.items} />
         <img src="../img/add-circle.png" style={addStyle} onClick={this.onAdd}/>
