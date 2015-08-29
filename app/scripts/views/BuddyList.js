@@ -4,6 +4,8 @@ var React = window.React = require('react')
 var LocationStore = require('../stores/LocationStore');
 var LocationActions = require('../actions/LocationActions');
 
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
 
 var BuddyList = React.createClass({
   _handleRemove: function(id) {
@@ -22,7 +24,9 @@ var BuddyList = React.createClass({
       return (
         <div style={listStyle}>
           <div>
-            <img src={user.data.avatar} />
+            <Link to="/profile/123">
+              <img src={user.data.avatar} />
+            </Link>
           </div>
           {user.data.username}<br/>
           {user.data.firstName}<br/>

@@ -97,19 +97,41 @@ var App = React.createClass({
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
         {nothingMsg}
+
+        {/*children refers to route children*/}
+        {this.props.children}
       </div>
     );
   }
 });
 
-//React.render(<App />, document.getElementById("app"));
 // https://www.npmjs.com/package/react-router
+// https://github.com/rackt/react-router/pull/1323
 
+var profileStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#E0F2FF',
+};
+
+var Profile = React.createClass({
+    render: function() {
+        return (
+          <div style={profileStyle}>
+            I am profile
+          </div>
+        )
+    }
+});
 
 React.render((
   <Router history={new HashHistory} >
     <Route path="/" component={App}>
-      <Route path="about" component={App}/>
+      {/* Add the route, nested where we want the UI to nest */}
+      <Route path="profile/:id" component={Profile}/>
     </Route>
   </Router>
 ), document.getElementById("app"));
