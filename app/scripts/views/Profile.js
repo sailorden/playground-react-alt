@@ -9,7 +9,7 @@ var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var Link = ReactRouter.Link;
 
-var profileStyle = {
+var wrapper = {
     position: 'fixed',
     top: 0,
     left: 0,
@@ -18,11 +18,25 @@ var profileStyle = {
     backgroundColor: '#E0F2FF',
 };
 
+var coverStyle = {
+    height: '66%',
+    width: '100%',
+    background: 'url("http://www.sonicagenda.com/wp-content/uploads/2014/07/ibiza.jpg")',
+    backgroundSize: 'cover',
+};
+
+var profileBody = {
+}
+
 var Profile = React.createClass({
     render: function() {
         return (
-          <div style={profileStyle}>
-            I am profile
+          <div style={wrapper}>
+            <div style={coverStyle} >
+            </div>
+            <div style={profileBody}>
+              Profile body
+            </div>
           </div>
         )
     }
