@@ -4,6 +4,7 @@ var React = window.React = require('react')
 var LocationStore = require('../stores/LocationStore');
 var LocationActions = require('../actions/LocationActions');
 
+
 var BuddyList = React.createClass({
   _handleRemove: function(id) {
     // https://facebook.github.io/react/tips/communicate-between-components.html

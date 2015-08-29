@@ -10,6 +10,13 @@ var LocationStore = require('./stores/LocationStore');
 var LocationActions = require('./actions/LocationActions');
 var BuddyList = require('./views/BuddyList');
 
+var ReactRouter = window.ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+var Link = ReactRouter.Link;
+
+var HashHistory = require('react-router/lib/HashHistory').default;
+
 var App = React.createClass({
   getInitialState: function() {
     return {
@@ -95,4 +102,15 @@ var App = React.createClass({
   }
 });
 
-React.render(<App />, document.getElementById("app"));
+//React.render(<App />, document.getElementById("app"));
+// https://www.npmjs.com/package/react-router
+
+
+React.render((
+  <Router history={new HashHistory} >
+    <Route path="/" component={App}>
+      <Route path="about" component={App}/>
+    </Route>
+  </Router>
+), document.getElementById("app"));
+

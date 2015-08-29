@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "alt": "^0.16.7",
-    "react-ajax": "^0.1.1"
+    "react-ajax": "^0.1.1",
+    "react-router": "1.0.0-beta3"
   },
   "devDependencies": {
     "browser-sync": "latest",
