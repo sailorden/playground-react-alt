@@ -9,6 +9,7 @@ var AltContainer = require('alt/AltContainer');
 var LocationStore = require('./stores/LocationStore');
 var LocationActions = require('./actions/LocationActions');
 var BuddyList = require('./views/BuddyList');
+var Profile = require('./views/Profile');
 
 var ReactRouter = window.ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -107,25 +108,6 @@ var App = React.createClass({
 
 // https://www.npmjs.com/package/react-router
 // https://github.com/rackt/react-router/pull/1323
-
-var profileStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#E0F2FF',
-};
-
-var Profile = React.createClass({
-    render: function() {
-        return (
-          <div style={profileStyle}>
-            I am profile
-          </div>
-        )
-    }
-});
 
 React.render((
   <Router history={new HashHistory} >
