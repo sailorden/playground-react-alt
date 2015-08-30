@@ -43,6 +43,11 @@ var profilePic = {
     bottom: '-64px',
 }
 
+var backBtn = {
+    marginTop: '40px',
+    cursor: 'pointer',
+}
+
 var Profile = React.createClass({
     mixins: [ Navigation ],
     render: function() {
@@ -73,7 +78,7 @@ var Profile = React.createClass({
               {profile.firstName} {profile.lastName}
               <br/>
               {profile.username}
-              <div onClick={function() {this.goBack()}.bind(this)}>
+              <div onClick={function() {this.goBack()}.bind(this)} style={backBtn}>
                 Go back
               </div>
             </div>
