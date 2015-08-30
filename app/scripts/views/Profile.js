@@ -70,7 +70,9 @@ var Profile = React.createClass({
               <img src={profile.avatar} style={profilePic} />
             </div>
             <div style={profileBody}>
-              Profile body
+              {profile.firstName} {profile.lastName}
+              <br/>
+              {profile.username}
               <div onClick={function() {this.goBack()}.bind(this)}>
                 Go back
               </div>
