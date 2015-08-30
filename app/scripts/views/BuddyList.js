@@ -24,7 +24,7 @@ var BuddyList = React.createClass({
       return (
         <div style={listStyle}>
           <div>
-            <Link to="/profile/123">
+            <Link to={"/profile/" + user.id}>
               <img src={user.data.avatar} />
             </Link>
           </div>
