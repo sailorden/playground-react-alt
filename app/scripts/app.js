@@ -5,9 +5,10 @@
 var React = window.React = require('react')
 var Ajax = require('react-ajax')
 var resp = require('./response.js');
+var Sort = require('./Views/Sort');
 var AltContainer = require('alt/AltContainer');
-var LocationStore = require('./stores/LocationStore');
-var LocationActions = require('./actions/LocationActions');
+var BuddyStore = require('./stores/BuddyStore');
+var BuddyActions = require('./actions/BuddyActions');
 var BuddyList = require('./views/BuddyList');
 var Profile = require('./views/Profile');
 
@@ -21,8 +22,7 @@ var HashHistory = require('react-router/lib/HashHistory').default;
 var App = React.createClass({
   getInitialState: function() {
     return {
-      initialItems: LocationStore.getState().locations,  // we are returned {locatins: [..]}
-      items: [],
+      items: BuddyStore.getState().buddys,  // we are returned {locatins: [..]}
       text: ''
     };
   },
@@ -35,11 +35,12 @@ var App = React.createClass({
     var nextItems = this.state.items.concat([this.state.text]);
     this.setState({items: nextItems, text: ''}); //calling this triggers UI update
   },
+
   filterList: function(event) {
-    var updatedList = this.state.initialItems;
+    // use buddys as opposed to buddysFilteredList as it is the base of our filtration
+    var updatedList = BuddyStore.getState().buddys;
     var lowerCasedInput = event.target.value.toLowerCase()
 
-    
     updatedList = updatedList.filter(function(item) {
         return [item.data.username.toLowerCase(),
                item.data.firstName.toLowerCase(),
@@ -49,36 +50,34 @@ var App = React.createClass({
     });
 
     console.log(updatedList)
-    this.setState({items: updatedList});
+    BuddyActions.updateFiltered(updatedList)
+
     updatedList.length === 0 ? console.log('empty list'): !!1;
   },
 
   componentWillMount: function() {
     console.log('in componentWillMount');
-    this.setState({items: this.state.initialItems})
   },
 
   componentDidMount: function() {
-    LocationStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
+    BuddyStore.listen(this._onStoreChange);// all instances returned by alt.createStore have a listen method.
   },
 
   componentWillUnmount() {
-    LocationStore.unlisten(this._onStoreChange);
+    BuddyStore.unlisten(this._onStoreChange);
   },
 
   _onStoreChange() {
     console.log('onChange fired');
     // As we console logged, Location stores are indeed being deleted
     this.setState({
-        initialItems: LocationStore.getState().locations,
-        items: this.state.items.filter(function(el) {
-            return el.id !== LocationStore.getState().lastRemoved
-        })// items has to go through this filter and look at lastRemoved incase the user is using the filter search function. we dont want them to lose their current search view 
+        items: BuddyStore.getState().buddysFiltered 
     }, function() {
+      console.log('Items length:');
       console.log(this.state.items.length)
     }.bind(this));
 
-    console.log(LocationStore.getState().lastRemoved)
+    console.log(BuddyStore.getState().lastRemoved)
 
     // if we were to call getInitialState instead of using setState, then we could lose our current filtered view?
   },
@@ -91,6 +90,7 @@ var App = React.createClass({
       <div>
         <h3>Buddy List</h3>
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
+        <Sort />
 
         <BuddyList items={this.state.items} />
         <form onSubmit={this.onSubmitAddField}>

@@ -1,8 +1,8 @@
 'use strict'
 
 var React = window.React = require('react')
-var LocationStore = require('../stores/LocationStore');
-var LocationActions = require('../actions/LocationActions');
+var BuddyStore = require('../stores/BuddyStore');
+var BuddyActions = require('../actions/BuddyActions');
 
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
@@ -12,9 +12,8 @@ var BuddyList = React.createClass({
     // https://facebook.github.io/react/tips/communicate-between-components.html
     console.log('remove handler clicked');
     console.log(id)
-    LocationActions.remove(id);
+    BuddyActions.remove(id);
     ev.stopPropagation();
-
 
   },
   render: function() {

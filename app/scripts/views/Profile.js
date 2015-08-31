@@ -1,7 +1,7 @@
 var React = window.React = require('react')
 var AltContainer = require('alt/AltContainer');
-var LocationStore = require('../stores/LocationStore');
-var LocationActions = require('../actions/LocationActions');
+var LocationStore = require('../stores/BuddyStore');
+var LocationActions = require('../actions/BuddyActions');
 var BuddyList = require('./BuddyList');
 var resp = require('../response.js');
 
