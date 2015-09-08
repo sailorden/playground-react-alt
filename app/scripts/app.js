@@ -83,20 +83,27 @@ var App = React.createClass({
   },
 
   render: function() {
-    var nothingMsg = (!this.state.items.length) ? <div>Nothing here babe</div>: ''; 
+    var nothingMsg = (!this.state.items.length) ? <div>No nodes to show</div>: ''; 
 
     // curly braces inside jsx attributes allow us to use JS expressions
     return (
       <div>
         <h3>Buddy List</h3>
+
+        <div className="gh-source">
+          Source code and walk through: <a href="https://github.com/theodoreli/playground-react-alt">https://github.com/theodoreli/playground-react-alt</a>
+        </div>
+
         <input className="filter-field" type="text" placeholder="Filter" onChange={this.filterList}/>
         <Sort />
 
         <BuddyList items={this.state.items} />
+        {/*
         <form onSubmit={this.onSubmitAddField}>
           <input onChange={this.onChangeAddField} value={this.state.text} placeholder='Add An Item'/>
           <button>{'Add #' + (this.state.items.length + 1)}</button>
         </form>
+       */}
         {nothingMsg}
 
         {/*children refers to route children*/}
