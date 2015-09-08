@@ -11,10 +11,13 @@ Navigate through a large list of Buddies.
 
 ### Libraries
 - React
+ - for normalized interfacing with DOM and view rendering   
 - Alt (Flux implementation)
+ - for eventing and data modeling 
 - React-router
 - Gulp
- - BrowserSync (How can you not love this)
+ - streaming task runner
+
 
 ### Architecture
 > As per Flux, we have Actions (a la Controller) Stores (a la Model) and Components (a la View)
