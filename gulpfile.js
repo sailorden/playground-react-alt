@@ -1,4 +1,5 @@
 'use strict';
+// Theo
 
 var gulp = require('gulp');
 var del = require('del');
